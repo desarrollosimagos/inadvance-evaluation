@@ -1,6 +1,7 @@
 package org.inadvance.service.impl;
 
-import org.inadvance.dto.UserDTO;
+import org.inadvance.dto.UserRequestDTO;
+import org.inadvance.dto.UserResponseDTO;
 import org.inadvance.model.User;
 import org.inadvance.repository.UserRepository;
 import org.inadvance.service.UserService;
@@ -25,7 +26,8 @@ public class UserServiceImpl implements UserService {
     private Environment env;
 
     @Override
-    public UserDTO registerUser(User newUser) {
+    public UserResponseDTO registerUser(UserRequestDTO user) {
+        User newUser = UserMapper.INSTANCE.userRequestDTOToUser(user);
         validateEmail(newUser.getEmail());
         validatePassword(newUser.getPassword());
         validateAlreadyEmail(newUser);
@@ -35,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getListUser(){
+    public List<UserResponseDTO> getListUser(){
         return UserMapper.INSTANCE.usersToUserDTOs(userRepository.findAll());
     }
 

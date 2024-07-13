@@ -1,7 +1,7 @@
 package org.inadvance.dto;
 import java.time.LocalDateTime;
 import java.util.UUID;
-public class UserDTO {
+public class UserResponseDTO {
     private UUID id;
     private LocalDateTime created;
     private LocalDateTime modified;
