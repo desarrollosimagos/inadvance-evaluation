@@ -19,7 +19,12 @@
     {
       "name": "user-controller",
       "description": "Operations pertaining to user in User Management System"
+    },
+    {
+      "name": "system-config",
+      "description": "System health"
     }
+
   ],
   "paths": {
     "/api/users/add": {
@@ -99,6 +104,34 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponseDTO"
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/actuator/health": {
+      "get": {
+        "tags": [
+          "system-config"
+        ],
+        "summary": "Services and config componentes up",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "Services and config componentes up",
+          },
+          "400": {
+            "description": "Bad Request",
           },
           "401": {
             "description": "Unauthorized"
