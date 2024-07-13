@@ -1,4 +1,4 @@
-package org.inadvance.Exception;
+package org.inadvance.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

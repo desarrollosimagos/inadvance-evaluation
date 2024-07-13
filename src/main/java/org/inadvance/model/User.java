@@ -104,7 +104,6 @@ public class User {
         isActive = active;
     }
 
-    // Getters and setters
     @Entity
     public class Phone {
         @Id
@@ -145,7 +144,5 @@ public class User {
         public void setCountryCode(String countryCode) {
             this.countryCode = countryCode;
         }
-
-        // Getters and setters
     }
 }
