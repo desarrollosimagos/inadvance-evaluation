@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
         validatePassword(newUser.getPassword());
         validateAlreadyEmail(newUser);
         newUser.setToken(jwtUtil.generateToken(newUser));
+        newUser.setActive(Boolean.TRUE);
         return UserMapper.INSTANCE.userToUserDTO(userRepository.save(newUser));
     }
 

@@ -1,17 +1,16 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.6.0'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot' version '2.3.1.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 }
 
 group = 'org.inadvance'
 version = '1.0'
+sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
 }
-
-
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -24,6 +23,15 @@ dependencies {
     }
     implementation 'org.mapstruct:mapstruct:1.4.2.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+}
+
+bootJar {
+    archiveFileName = 'inadvance-evaluation-1.0-plain.jar'
+    mainClassName = 'org.inadvance.Application'
+}
+
+springBoot {
+    mainClassName = 'org.inadvance.Application'
 }
 
 test {
