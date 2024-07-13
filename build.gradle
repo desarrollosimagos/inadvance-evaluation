@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
     id 'org.springframework.boot' version '2.3.1.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 }
@@ -18,9 +19,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     runtimeOnly 'com.h2database:h2'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-core'
     implementation 'org.mapstruct:mapstruct:1.4.2.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
@@ -39,4 +38,29 @@ springBoot {
 
 test {
     useJUnitPlatform()
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+        html.outputLocation = file("${buildDir}/jacocoHtml")
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    'org/inadvance/model/**',
+                    'org/inadvance/dto/**',
+                    'org/inadvance/repository/**',
+                    'org/inadvance/service/UserService.class',
+                    'org/inadvance/service/mapper/**',
+                    'org/inadvance/util/**',
+                    'org/inadvance/securityConfig/**',
+                    'org/inadvance/exception/**',
+                    'org/inadvance/Application.class',
+
+            ])
+        }))
+    }
 }
