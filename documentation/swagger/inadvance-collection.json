@@ -1,0 +1,226 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Api Documentation",
+    "version": "1.0",
+    "title": "Api Documentation",
+    "termsOfService": "urn:tos",
+    "contact": {
+
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "user-controller",
+      "description": "Operations pertaining to user in User Management System"
+    }
+  ],
+  "paths": {
+    "/api/users/add": {
+      "post": {
+        "tags": [
+          "user-controller"
+        ],
+        "summary": "Add a new user",
+        "operationId": "createUserUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User details for the new user to be created in database",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserRequestDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully added user",
+            "schema": {
+              "$ref": "#/definitions/UserResponseDTO"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseDTO"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/users/all": {
+      "get": {
+        "tags": [
+          "user-controller"
+        ],
+        "summary": "View a list of available users",
+        "operationId": "getListUserUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserResponseDTO"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponseDTO"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ErrorResponseDTO": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example":"Email already registered.",
+          "description": "The error message"
+        }
+      },
+      "title": "ErrorResponseDTO",
+      "description": "Details about the error response"
+    },
+    "PhoneDTO": {
+      "type": "object",
+      "properties": {
+        "cityCode": {
+          "type": "string",
+          "example": 99,
+          "description": "The Phone cityCode"
+        },
+        "countryCode": {
+          "type": "string",
+          "example": 56,
+          "description": "The Phone cityCode"
+        },
+        "number": {
+          "type": "string",
+          "example": 937836233,
+          "description": "The Phone number"
+        }
+      },
+      "title": "PhoneDTO"
+    },
+    "UserRequestDTO": {
+      "type": "object",
+      "required": [
+        "email",
+        "name",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "ing.omar.orozco@gmail.com",
+          "description": "The user's email"
+        },
+        "name": {
+          "type": "string",
+          "example": "Omar Orozco",
+          "description": "The user's name"
+        },
+        "password": {
+          "type": "string",
+          "example": "SecurePassword123",
+          "description": "The user's password"
+        },
+        "phones": {
+          "type": "array",
+          "description": "List of phones associated with the user",
+          "items": {
+            "$ref": "#/definitions/PhoneDTO"
+          }
+        }
+      },
+      "title": "UserRequestDTO",
+      "description": "Details about the user request"
+    },
+    "UserResponseDTO": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean",
+          "example": true,
+          "description": "The active status of the user"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-07-13T11:15:48.122",
+          "description": "The date and time when the user was created"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "example": "ba2067f3-99fc-4508-a5da-908a62dd594f",
+          "description": "The unique ID of the user"
+        },
+        "lastLogin": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-07-13T11:15:48.122",
+          "description": "The date and time when the user last logged in"
+        },
+        "modified": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-07-13T11:15:48.122",
+          "description": "The date and time when the user was last modified"
+        },
+        "token": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuQHJvZHJpZ3Vlei5vcmciLCJpYXQiOjE3MjA4ODM3NDcsImV4cCI6MTcyMDkxOTc0N30.V8oW6vcHkrgnmdbc4z8XTMcF-6i2ZRW8i5gMuljBTgY",
+          "description": "The JWT token assigned to the user"
+        }
+      },
+      "title": "UserResponseDTO",
+      "description": "Details about the user response"
+    }
+  }
+}

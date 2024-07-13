@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.core.env.Environment;
 import java.util.regex.Pattern;
+import org.inadvance.util.Constants;
 
 
 import java.util.List;
@@ -43,21 +44,21 @@ public class UserServiceImpl implements UserService {
 
     private void validateAlreadyEmail(User newUser){
         if (userRepository.existsByEmail(newUser.getEmail())) {
-            throw new IllegalArgumentException("Email already registered.");
+            throw new IllegalArgumentException(Constants.ERROR_EMAIL_DUPLICATED);
         }
     }
 
     private void validateEmail(String email) {
         String regex = env.getProperty("user.email.regex");
         if (!Pattern.matches(regex, email)) {
-            throw new IllegalArgumentException("Invalid email format");
+            throw new IllegalArgumentException(Constants.ERROR_FORMAT_EMAIL);
         }
     }
 
     private void validatePassword(String password) {
         String regex = env.getProperty("user.password.regex");
         if (!Pattern.matches(regex, password)) {
-            throw new IllegalArgumentException("Invalid password format");
+            throw new IllegalArgumentException(Constants.ERROR_FORMAT_PASSWORD);
         }
     }
 }
