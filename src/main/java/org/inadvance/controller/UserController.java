@@ -5,11 +5,14 @@ import org.inadvance.dto.UserResponseDTO;
 import org.inadvance.model.User;
 import org.inadvance.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -19,13 +22,13 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserRequestDTO user) {
+        Map<String, String> errors = new HashMap<>();
         try {
             UserResponseDTO createdUser = userService.registerUser(user);
             return ResponseEntity.ok(createdUser);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("{\"message\": \"" + e.getMessage() + "\"}");
-        }catch (NullPointerException e){
-            return ResponseEntity.badRequest().body("{\"message\": \"" + e.getMessage() + "\"}");
+            errors.put("message",e.getMessage());
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -35,9 +38,9 @@ public class UserController {
             List<UserResponseDTO> users = userService.getListUser();
             return ResponseEntity.ok(users);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("{\"message\": \"" + e.getMessage() + "\"}");
-        }catch (NullPointerException e){
-            return ResponseEntity.badRequest().body("{\"message\": \"" + e.getMessage() + "\"}");
+            Map<String, String> errors = new HashMap<>();
+            errors.put("message",e.getMessage());
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
     }
 
