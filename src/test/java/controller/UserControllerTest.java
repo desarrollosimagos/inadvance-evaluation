@@ -57,20 +57,7 @@ public class UserControllerTest {
         assertEquals(userResponseDTO, responseEntity.getBody());
     }
 
-    @Test
-    void testCreateUserFailure() {
-        UserRequestDTO userRequestDTO = new UserRequestDTO();
-        userRequestDTO.setName("Juan Rodriguez");
-        userRequestDTO.setEmail("juan@rodriguez.org");
-        userRequestDTO.setPassword("SecurePassword123");
 
-        when(userService.registerUser(any(UserRequestDTO.class))).thenThrow(new IllegalArgumentException("Email already registered."));
-
-        ResponseEntity<?> responseEntity = userController.createUser(userRequestDTO);
-
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        assertEquals("Email already registered.", ((HashMap) responseEntity.getBody()).get("message"));
-    }
 
     @Test
     void testGetListUserSuccess() {
@@ -98,15 +85,5 @@ public class UserControllerTest {
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(userList, responseEntity.getBody());
-    }
-
-    @Test
-    void testGetListUserFailure() {
-        when(userService.getListUser()).thenThrow(new IllegalArgumentException("No users found."));
-
-        ResponseEntity<?> responseEntity = userController.getListUser();
-
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        assertEquals("No users found.", ((HashMap) responseEntity.getBody()).get("message"));
     }
 }

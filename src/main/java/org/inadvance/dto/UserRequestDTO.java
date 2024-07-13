@@ -1,27 +1,24 @@
 package org.inadvance.dto;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.UUID;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "Details about the user request")
 public class UserRequestDTO {
-    private UUID id;
+    @ApiModelProperty(notes = "The user's name", required = true,example = "Omar Orozco")
     @NotBlank(message = "Name is mandatory")
     private String name;
+    @ApiModelProperty(notes = "The user's email", required = true,example = "ing.omar.orozco@gmail.com")
     @NotBlank(message = "Email is mandatory")
     private String email;
+    @ApiModelProperty(notes = "The user's password", required = true,example = "SecurePassword123")
     @NotBlank(message = "Password is mandatory")
     private String password;
 
-    private List<Phone> phones;
-
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
+    @ApiModelProperty(notes = "List of phones associated with the user")
+    private List<PhoneDTO> phones;
 
     public String getName() {
         return name;
@@ -47,43 +44,13 @@ public class UserRequestDTO {
         this.password = password;
     }
 
-    public class Phone {
-        private Long id;
-        private String number;
-        private String cityCode;
-        private String countryCode;
-
-        public Long getId() {
-            return id;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public String getNumber() {
-            return number;
-        }
-
-        public void setNumber(String number) {
-            this.number = number;
-        }
-
-        public String getCityCode() {
-            return cityCode;
-        }
-
-        public void setCityCode(String cityCode) {
-            this.cityCode = cityCode;
-        }
-
-        public String getCountryCode() {
-            return countryCode;
-        }
-
-        public void setCountryCode(String countryCode) {
-            this.countryCode = countryCode;
-        }
-
+    public List<PhoneDTO> getPhones() {
+        return phones;
     }
+
+    public void setPhones(List<PhoneDTO> phones) {
+        this.phones = phones;
+    }
+
+
 }

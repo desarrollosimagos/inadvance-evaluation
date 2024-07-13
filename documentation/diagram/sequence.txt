@@ -1,0 +1,20 @@
+@startuml
+actor User
+User -> UserController: POST /api/users/add
+UserController -> UserServiceImpl: registerUser(UserRequestDTO)
+UserServiceImpl -> UserMapper: userRequestDTOToUser(UserRequestDTO)
+UserMapper --> UserServiceImpl: User
+UserServiceImpl -> UserServiceImpl: validateEmail(User.getEmail())
+UserServiceImpl -> UserServiceImpl: validatePassword(User.getPassword())
+UserServiceImpl -> UserServiceImpl: validateAlreadyEmail(User)
+UserServiceImpl -> UserRepository: existsByEmail(User.getEmail())
+UserRepository --> UserServiceImpl: false
+UserServiceImpl -> JwtUtil: generateToken(User)
+JwtUtil --> UserServiceImpl: token
+UserServiceImpl -> UserRepository: save(User)
+UserRepository --> UserServiceImpl: savedUser
+UserServiceImpl -> UserMapper: userToUserDTO(savedUser)
+UserMapper --> UserServiceImpl: UserResponseDTO
+UserServiceImpl --> UserController: UserResponseDTO
+UserController --> User: ResponseEntity.ok(UserResponseDTO)
+@enduml

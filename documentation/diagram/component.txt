@@ -1,0 +1,95 @@
+@startuml
+package org.inadvance.controller {
+    class UserController {
+        - UserServiceImpl userService
+        + createUser(UserRequestDTO): ResponseEntity<UserResponseDTO>
+        + getListUser(): ResponseEntity<List<UserResponseDTO>>
+    }
+}
+
+package org.inadvance.service.impl {
+    class UserServiceImpl implements UserService {
+        - UserRepository userRepository
+        - JwtUtil jwtUtil
+        - Environment env
+        + registerUser(UserRequestDTO): UserResponseDTO
+        + getListUser(): List<UserResponseDTO>
+        - validateAlreadyEmail(User)
+        - validateEmail(String)
+        - validatePassword(String)
+    }
+}
+
+package org.inadvance.repository {
+    interface UserRepository {
+        + existsByEmail(String): boolean
+    }
+}
+
+package org.inadvance.dto {
+    class UserRequestDTO {
+        UUID id
+        String name
+        String email
+        String password
+        List<Phone> phones
+    }
+
+    class UserResponseDTO {
+        UUID id
+        LocalDateTime created
+        LocalDateTime modified
+        LocalDateTime lastLogin
+        String token
+        boolean active
+    }
+
+    class ErrorResponseDTO {
+        String message
+    }
+
+    class Phone {
+        Long id
+        String number
+        String cityCode
+        String countryCode
+    }
+}
+
+package org.inadvance.model {
+    class User {
+        UUID id
+        String name
+        String email
+        String password
+        List<Phone> phones
+        LocalDateTime created
+        LocalDateTime modified
+        LocalDateTime lastLogin
+        String token
+        boolean active
+    }
+}
+
+package org.inadvance.exception {
+    class GlobalExceptionHandler {
+        + handleValidationExceptions(MethodArgumentNotValidException): ResponseEntity<ErrorResponseDTO>
+        + handleIllegalArgumentException(IllegalArgumentException): ResponseEntity<ErrorResponseDTO>
+    }
+}
+
+package org.inadvance.util {
+    class JwtUtil {
+        + generateToken(User): String
+    }
+}
+
+UserController --> UserServiceImpl
+UserServiceImpl --> UserRepository
+UserServiceImpl --> JwtUtil
+UserServiceImpl --> Environment
+UserServiceImpl --> UserMapper
+UserServiceImpl --> User
+UserRepository --> User
+GlobalExceptionHandler --> ErrorResponseDTO
+@enduml
