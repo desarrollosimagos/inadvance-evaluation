@@ -2,7 +2,6 @@ package org.inadvance.controller;
 
 import org.inadvance.dto.UserRequestDTO;
 import org.inadvance.dto.UserResponseDTO;
-import org.inadvance.model.User;
 import org.inadvance.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
