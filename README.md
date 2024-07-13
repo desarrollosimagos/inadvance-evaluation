@@ -78,6 +78,7 @@ Para compilar y ejecutar la aplicación, usa los siguientes comandos de Gradle:
 Para acceder a la consola H2, abre un navegador web y navega a:
 ```groovy
 http://localhost:8080/h2-console
+```
 
 ### Ver la Documentación de Swagger
 Para ver la documentación generada por Swagger, abre un navegador web y navega a:
