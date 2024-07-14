@@ -25,7 +25,7 @@ public class UserController {
     })
     @PostMapping("/add")
     public ResponseEntity<UserResponseDTO> createUser(
-            @ApiParam(value = "User details for the new user to be created in database", required = true, example = "{ \"name\": \"Juan Rodriguez\", \"email\": \"juan@rodriguez.org\", \"password\": \"SecurePassword123\", \"phones\": [{ \"number\": \"1234567\", \"cityCode\": \"1\", \"countryCode\": \"57\" }] }")
+            @ApiParam(value = "User details for the new user to be created in database", required = true)
             @Valid @RequestBody UserRequestDTO user
     ) {
         UserResponseDTO createdUser = userService.registerUser(user);
